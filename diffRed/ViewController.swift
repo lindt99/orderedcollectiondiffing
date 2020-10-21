@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     @IBAction func startButton(_ sender: UIButton){
         let modelarr:[String] = ["Hello", "world", "is", "the", "first", "step", "to", "coding",]
-        let voicestr = "Hello world is was the first step to coding"
+        let voicestr = "Hello word is is was the first step to coating"
         let voicearr:[String] = voicestr.components(separatedBy: " ")
         
         let voicearrlength = voicearr.count - 1
@@ -22,10 +22,10 @@ class ViewController: UIViewController {
         //ordered collection diffing
         let diff = voicearr.difference(from: modelarr)
         
-        var word:[NSMutableAttributedString] = []
+        var word:[NSAttributedString] = []
         
         for voicearrword in 0...voicearrlength{
-            word.append(NSMutableAttributedString(string: voicearr[voicearrword]))
+            word.append(NSAttributedString(string: (voicearr[voicearrword])))
             //print("voicearrword: " + String(voicearrword) + "voicearrklen: " + String(voicearrlength) )
         }
         
@@ -46,13 +46,17 @@ class ViewController: UIViewController {
                 print("remove index:" + String(offset) + "word:" + element)
             case .insert(let offset, let element, _):
                 //余計な単語を赤文字にする
-                word[offset] = NSAttributedString(string:element, attributes: redAttribute) as! NSMutableAttributedString
-                coloredString.append(word[offset])
+                word[offset] = NSAttributedString(string:element, attributes: redAttribute)
                 print("offset: " + String(offset) + " string:" + element)
             }
             
         }
-
+        
+        var space = " "
+        for i in 0...voicearrlength{
+        coloredString.append(word[i])
+        coloredString.append(NSAttributedString(string:space))
+        }
         //赤文字変更後をラベルに表示
         textLabel.attributedText = coloredString
         
